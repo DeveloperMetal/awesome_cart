@@ -10,7 +10,8 @@
 	],
 	"css/awc_cart.css": [
 		"public/css/awc_cart.css",
-		"public/css/checkout.css"
+		"public/css/checkout.css",
+		"public/css/product-detail.css"
 	],
 	"css/awc.ui.desk.css": [
 		"public/js/lib/taggle/taggle.min.css",
