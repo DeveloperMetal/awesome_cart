@@ -6,16 +6,7 @@
             </div>
         </div>
         {{#if detail.related_products }}
-        <div class="section related-products">
-          <h3>Related Items</h3>
-          <ul>
-            {{#each detail.related_products }}
-              <li>{{{ template this.related_widget this }}}</li>
-            {{/each}}
-          </ul>
-          <div class="control left"><span class="glyphicon glyphicon-chevron-left"></span></div>
-          <div class="control right"><span class="glyphicon glyphicon-chevron-right"></span></div>
-        </div>
+        {{{ template "/assets/awesome_cart/awc-templates/upsell-widget.html" detail }}}
         {{/if}}
         {{#eachEven detail.sections }}
         <div class="section details-{{$index}}">

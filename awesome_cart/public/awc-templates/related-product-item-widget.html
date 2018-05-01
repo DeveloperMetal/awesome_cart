@@ -1,15 +1,10 @@
-{{#if this.custom.listing_logo_url }}
-<img class="logo" src="{{this.custom.listing_logo_url}}">
-{{else}}
-<div class="product-name">{{ (or this.custom.title_small this.custom.title this.name) }}</div>
-{{/if}}
-<img alt="{{#if this.custom.title}}{{this.custom.title}}{{else}}{{this.name}}{{/if}}" src="{{this.imageUrl}}">
-<div class="price-container">
-	<span class="from">Starting at</span><br>
-  {{#if (eq this.price this.base_price) }}
-  <span class="price">{{ currency this.price }}</span>
-  {{else}}
-  <span class="price old-price"><del>{{ currency this.base_price }}</del></span>
-  <span class="price">{{ currency this.price }}</span>
-  {{/if}}
-</div>
+<a href="{{ this.productUrl }}">
+  <div 
+    class="product-image" 
+    title="{{#if this.custom.title}}{{this.custom.title}}{{else}}{{this.name}}{{/if}}" 
+    style="background-image: url({{this.imageUrl}});"></div>
+  <div class="product-name">{{ or this.custom.title_small this.custom.title this.name }}</div>
+  <div class="price-container">
+    <span class="price">{{ currency this.price }}</span>
+  </div>
+</a>

@@ -370,6 +370,30 @@ def get_product_by_sku(sku, detailed=0, awc_session=None, quotation=None):
 	set_cache(cache_key, data, session=awc_session, prefix=cache_prefix)
 	return data
 
+def get_related_products_by_sku(sku, awc_session, customer):
+
+	cache_key = "related-products-{}".format(sku)
+	cache_data, cache_prefix, awc_session = get_quick_cache(cache_key, awc_session=awc_session, customer=customer)
+	if cache_data:
+		return cache_data
+
+	result = []
+	item_name = frappe.db.get_value("Item", {"item_code": sku}, "name")
+
+	awc_item_name = frappe.db.get_value("AWC Item", {"product_name": item_name}, "name")
+	if awc_item_name:
+		related_items = frappe.get_list(
+			"AWC Item Recomendation", 
+			filters={ "parent": awc_item_name, "parenttype": "AWC Item"}, 
+			fields=["item_name"])
+
+		for r in related_items:
+			result += [frappe.db.get_value("Item", r.get("item_name"), "item_code")]
+
+	set_cache(cache_key, result, session=awc_session, prefix=cache_prefix)
+
+	return result
+
 @frappe.whitelist(allow_guest=True, xss_safe=True)
 def fetch_products(tags="", terms="", order_by="order_weight", order_dir="asc", start=0, limit=None):
 	"""Fetches a list of products filtered by tags"""
